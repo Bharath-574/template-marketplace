@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Registration - TemplateHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Marketplace Navigation */
+        .marketplace-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .marketplace-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .marketplace-nav a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Main Container */
+        .register-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .register-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-subtitle {
+            color: #718096;
+            font-size: 1rem;
+        }
+
+        /* Social Login Section */
+        .social-section {
+            margin-bottom: 2rem;
+        }
+
+        .social-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            background: white;
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .social-btn:hover::before {
+            left: 100%;
+        }
+
+        .social-btn.google {
+            border-color: #ea4335;
+            color: #ea4335;
+        }
+
+        .social-btn.google:hover {
+            background: #ea4335;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(234, 67, 53, 0.3);
+        }
+
+        .social-btn.facebook {
+            border-color: #4267b2;
+            color: #4267b2;
+        }
+
+        .social-btn.facebook:hover {
+            background: #4267b2;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(66, 103, 178, 0.3);
+        }
+
+        .social-btn.github {
+            border-color: #333;
+            color: #333;
+        }
+
+        .social-btn.github:hover {
+            background: #333;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(51, 51, 51, 0.3);
+        }
+
+        .social-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .divider span {
+            margin: 0 1rem;
+            background: white;
+            padding: 0 0.5rem;
+        }
+
+        /* Traditional Form */
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            color: #2d3748;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: white;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-input::placeholder {
+            color: #a0aec0;
+        }
+
+        /* Profile Picture Upload */
+        .profile-upload {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .profile-upload:hover {
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.05);
+        }
+
+        .profile-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .upload-text {
+            flex: 1;
+        }
+
+        .upload-title {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 0.25rem;
+        }
+
+        .upload-subtitle {
+            font-size: 0.875rem;
+            color: #718096;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 0.5rem;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-text {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        /* Terms and Privacy */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .terms-group input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            accent-color: #4facfe;
+        }
+
+        .terms-text {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .terms-text a {
+            color: #4facfe;
+            text-decoration: none;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .register-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+        }
+
+        .register-btn:hover::before {
+            left: 100%;
+        }
+
+        .register-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            margin-top: 2rem;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: #4facfe;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .register-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .register-title {
+                font-size: 1.8rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .social-buttons {
+                gap: 0.75rem;
+            }
+
+            .profile-upload {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Marketplace Navigation -->
+    <div class="marketplace-nav">
+        <a href="../../../index.html">
+            <span>←</span>
+            <span>Back to Marketplace</span>
+        </a>
+    </div>
+
+    <div class="register-container">
+        <div class="register-header">
+            <h1 class="register-title">Create Account</h1>
+            <p class="register-subtitle">Join thousands of users today</p>
+        </div>
+
+        <!-- Social Registration -->
+        <div class="social-section">
+            <h3 class="social-title">Quick sign up with</h3>
+            <div class="social-buttons">
+                <a href="#" class="social-btn google" onclick="handleSocialLogin('google')">
+                    <span class="social-icon">🔴</span>
+                    <span>Continue with Google</span>
+                </a>
+                <a href="#" class="social-btn facebook" onclick="handleSocialLogin('facebook')">
+                    <span class="social-icon">📘</span>
+                    <span>Continue with Facebook</span>
+                </a>
+                <a href="#" class="social-btn github" onclick="handleSocialLogin('github')">
+                    <span class="social-icon">⚫</span>
+                    <span>Continue with GitHub</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="divider">
+            <span>or create with email</span>
+        </div>
+
+        <!-- Traditional Registration Form -->
+        <form class="register-form" id="registerForm">
+            <!-- Profile Picture Upload -->
+            <div class="form-group">
+                <div class="profile-upload" onclick="document.getElementById('profilePic').click()">
+                    <div class="profile-preview" id="profilePreview">
+                        📷
+                    </div>
+                    <div class="upload-text">
+                        <div class="upload-title">Profile Photo</div>
+                        <div class="upload-subtitle">Click to upload (optional)</div>
+                    </div>
+                </div>
+                <input type="file" id="profilePic" class="file-input" accept="image/*"
+                    onchange="handleFileUpload(this)">
+            </div>
+
+            <!-- Name Fields -->
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="First Name" required id="firstName">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Last Name" required id="lastName">
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <input type="email" class="form-input" placeholder="Email address" required id="email">
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <input type="tel" class="form-input" placeholder="Phone number (optional)" id="phone">
+            </div>
+
+            <!-- Password with Strength Indicator -->
+            <div class="form-group">
+                <input type="password" class="form-input" placeholder="Create password" required id="password"
+                    onkeyup="checkPasswordStrength()">
+                <div class="password-strength">
+                    <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                    </div>
+                    <div class="strength-text" id="strengthText">Enter a password</div>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <input type="password" class="form-input" placeholder="Confirm password" required id="confirmPassword">
+            </div>
+
+            <!-- Terms and Privacy -->
+            <div class="form-group">
+                <div class="terms-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms" class="terms-text">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Marketing Consent -->
+            <div class="form-group">
+                <div class="terms-group">
+                    <input type="checkbox" id="marketing">
+                    <label for="marketing" class="terms-text">
+                        I want to receive updates and promotional emails
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="register-btn" id="submitBtn">
+                Create My Account
+            </button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="#">Sign in here</a>
+        </div>
+    </div>
+
+    <script>
+        let uploadedFile = null;
+
+        // Handle social login
+        function handleSocialLogin(provider) {
+            alert(`Redirecting to ${provider} authentication...`);
+            // In a real app, you would integrate with OAuth providers
+        }
+
+        // Handle file upload
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const preview = document.getElementById('profilePreview');
+                    preview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                    uploadedFile = file;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Password strength checker
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+
+            let strength = 0;
+            let feedback = '';
+
+            // Check length
+            if (password.length >= 8) strength += 25;
+
+            // Check for lowercase
+            if (/[a-z]/.test(password)) strength += 25;
+
+            // Check for uppercase
+            if (/[A-Z]/.test(password)) strength += 25;
+
+            // Check for numbers and symbols
+            if (/[\d\W]/.test(password)) strength += 25;
+
+            // Update UI
+            if (password.length === 0) {
+                strengthFill.style.width = '0%';
+                strengthText.textContent = 'Enter a password';
+                strengthText.style.color = '#718096';
+            } else if (strength < 50) {
+                strengthFill.style.width = strength + '%';
+                strengthFill.style.background = '#f56565';
+                strengthText.textContent = 'Weak password';
+                strengthText.style.color = '#f56565';
+            } else if (strength < 75) {
+                strengthFill.style.width = strength + '%';
+                strengthFill.style.background = '#ed8936';
+                strengthText.textContent = 'Good password';
+                strengthText.style.color = '#ed8936';
+            } else {
+                strengthFill.style.width = strength + '%';
+                strengthFill.style.background = '#48bb78';
+                strengthText.textContent = 'Strong password';
+                strengthText.style.color = '#48bb78';
+            }
+        }
+
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validate password match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Validate password strength
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+
+            // Add loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Creating Account...';
+            submitBtn.disabled = true;
+
+            // Simulate registration process
+            setTimeout(() => {
+                alert(`Account created successfully for ${firstName} ${lastName}!\nEmail: ${email}${uploadedFile ? '\nProfile picture uploaded!' : ''}`);
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                // In a real app, you would redirect to dashboard or email verification
+            }, 2000);
+        });
+
+        // Real-time password confirmation
+        document.getElementById('confirmPassword').addEventListener('keyup', function () {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#f56565';
+                this.style.background = 'rgba(245, 101, 101, 0.05)';
+            } else if (confirmPassword && password === confirmPassword) {
+                this.style.borderColor = '#48bb78';
+                this.style.background = 'rgba(72, 187, 120, 0.05)';
+            } else {
+                this.style.borderColor = '#e2e8f0';
+                this.style.background = '#f7fafc';
+            }
+        });
+
+        // Add input animations
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function () {
+                this.style.transform = 'translateY(-2px)';
+            });
+
+            input.addEventListener('blur', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Generate initials for profile preview
+        document.getElementById('firstName').addEventListener('keyup', updateProfileInitials);
+        document.getElementById('lastName').addEventListener('keyup', updateProfileInitials);
+
+        function updateProfileInitials() {
+            if (uploadedFile) return; // Don't update if user has uploaded a photo
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const preview = document.getElementById('profilePreview');
+
+            if (firstName || lastName) {
+                const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+                preview.textContent = initials || '👤';
+            } else {
+                preview.textContent = '📷';
+            }
+        }
+    </script>
+</body>
+
+</html>

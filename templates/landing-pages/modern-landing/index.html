@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Landing Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Marketplace Navigation Button */
+        .marketplace-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .marketplace-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .marketplace-nav a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .marketplace-nav a:hover {
+            color: #2d3748;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: #e2e8f0;
+        }
+
+        .template-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: none;
+            border: none;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            color: #2d3748;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            margin-top: 10px;
+            z-index: 1001;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .template-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 8px 15px;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        .dropdown-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #9ca3af;
+            font-weight: 600;
+            padding: 8px 15px 4px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .dropdown-category:first-child {
+            border-top: none;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .features {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Marketplace Navigation -->
+    <div class="marketplace-nav">
+        <a href="../../../index.html">
+            <span>←</span>
+            <span>Back to Marketplace</span>
+        </a>
+        <div class="nav-divider"></div>
+        <div class="template-dropdown">
+            <button class="dropdown-btn">
+                Templates <span style="font-size: 12px;">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-category">Portfolios</div>
+                <a href="../../portfolios/showcase/index.html">Creative Portfolio</a>
+
+                <div class="dropdown-category">Forms</div>
+                <a href="../../registration-forms/wizard/index.html">Registration Wizard</a>
+                <a href="../../login-forms/animated-login/index.html">Animated Login</a>
+
+                <div class="dropdown-category">E-commerce</div>
+                <a href="../../ecommerce/product-cards/index.html">Product Cards</a>
+                <a href="../../cards/product-grid/index.html">Product Grid</a>
+
+                <div class="dropdown-category">Blog & Content</div>
+                <a href="../../blogs/article/index.html">Article Blog</a>
+
+                <div class="dropdown-category">Pricing</div>
+                <a href="../../pricing/tables/index.html">Pricing Tables</a>
+
+                <div class="dropdown-category">Dashboard</div>
+                <a href="../../dashboards/analytics/index.html">Analytics Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to the Future</h1>
+            <p>Create amazing experiences with our modern solutions</p>
+            <a href="#" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem;">Why Choose Us</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast Performance</h3>
+                    <p>Lightning-fast loading times and optimal performance for all devices.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Modern Design</h3>
+                    <p>Beautiful, modern designs that capture attention and engage users.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>Fully Responsive</h3>
+                    <p>Perfect display and functionality across all devices and screen sizes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

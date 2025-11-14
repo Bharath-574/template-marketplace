@@ -1,0 +1,42 @@
+{
+  "name": "template-marketplace",
+  "version": "1.0.0",
+  "description": "A fully functional template marketplace with 22+ ready-to-use web templates",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -c-1",
+    "dev": "npx http-server -p 3000 -c-1 -o",
+    "build": "echo 'No build process needed - static HTML project'",
+    "deploy": "echo 'Deploy to GitHub Pages via Settings > Pages'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bharath-574/template-marketplace.git"
+  },
+  "keywords": [
+    "template",
+    "marketplace",
+    "html",
+    "css",
+    "javascript",
+    "responsive",
+    "web-templates",
+    "landing-pages",
+    "admin-dashboard",
+    "bootstrap-alternative"
+  ],
+  "author": "Bharath-574",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bharath-574/template-marketplace/issues"
+  },
+  "homepage": "https://bharath-574.github.io/template-marketplace/",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

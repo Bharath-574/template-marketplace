@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechInsights - Modern Technology Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        /* Marketplace Navigation Button */
+        .back-to-marketplace {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-marketplace:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .search-box {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            outline: none;
+            width: 250px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .subscribe-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        .subscribe-form input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .subscribe-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .subscribe-btn:hover {
+            background: #ff5252;
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            transition: transform 0.3s;
+        }
+
+        .featured-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .featured-image {
+            height: 300px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .featured-content {
+            padding: 2rem;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .category-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .featured-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        .featured-content p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+        }
+
+        /* Blog Posts Grid */
+        .blog-posts {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .post-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .post-content p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .widget h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .recent-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .recent-post {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .recent-post:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .recent-post-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .recent-post-content h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .recent-post-date {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .categories {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .category-item:hover {
+            background: #f8f9fa;
+        }
+
+        .category-item a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .post-count {
+            background: #667eea;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .tag {
+            background: #f8f9fa;
+            color: #555;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            color: white !important;
+            border: none !important;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: #ff5252;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #34495e;
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .subscribe-form {
+                flex-direction: column;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin: 2rem auto;
+            }
+
+            .featured-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../../index.html" class="back-to-marketplace">← Back to Templates</a>
+
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">TechInsights</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#programming">Programming</a></li>
+                <li><a href="#tutorials">Tutorials</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <input type="search" class="search-box" placeholder="Search articles...">
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Stay Updated with Tech Trends</h1>
+            <p>Discover the latest in technology, programming tutorials, and industry insights. Join thousands of
+                developers and tech enthusiasts in our community.</p>
+            <div class="subscribe-form">
+                <input type="email" placeholder="Enter your email">
+                <button class="subscribe-btn">Subscribe</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="main-content">
+        <main>
+            <article class="featured-post">
+                <div class="featured-image">🚀</div>
+                <div class="featured-content">
+                    <div class="post-meta">
+                        <span class="category-tag">Web Development</span>
+                        <span>January 15, 2025</span>
+                        <span>By Alex Johnson</span>
+                    </div>
+                    <h2>The Future of Web Development: What's Coming in 2025</h2>
+                    <p>As we step into 2025, the web development landscape continues to evolve at a rapid pace. From
+                        revolutionary AI-powered development tools to new frameworks that promise to change how we build
+                        applications, this year is set to be transformative for developers worldwide. Let's explore the
+                        key trends and technologies that will shape the future of web development.</p>
+                    <a href="#" class="read-more">Read Full Article →</a>
+                </div>
+            </article>
+
+            <div class="blog-posts">
+                <article class="post-card">
+                    <div class="post-image">⚛️</div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="category-tag">React</span>
+                            <span>January 12, 2025</span>
+                        </div>
+                        <h3>Mastering React Server Components: A Complete Guide</h3>
+                        <p>Learn how React Server Components are revolutionizing how we build React applications with
+                            better performance and developer experience.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-image">🛠️</div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="category-tag">DevOps</span>
+                            <span>January 10, 2025</span>
+                        </div>
+                        <h3>Docker Containerization Best Practices for 2025</h3>
+                        <p>Discover modern Docker practices, security considerations, and optimization techniques for
+                            efficient containerized applications.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-image">🔒</div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="category-tag">Security</span>
+                            <span>January 8, 2025</span>
+                        </div>
+                        <h3>Web Security Essentials: Protecting Your Applications</h3>
+                        <p>A comprehensive guide to modern web security threats and how to protect your applications
+                            from common vulnerabilities.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-image">🎨</div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="category-tag">Design</span>
+                            <span>January 5, 2025</span>
+                        </div>
+                        <h3>CSS Grid vs Flexbox: When to Use Each in 2025</h3>
+                        <p>Understanding the strengths of CSS Grid and Flexbox to make informed decisions about layout
+                            in modern web development.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </article>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="widget">
+                <h3>Recent Posts</h3>
+                <div class="recent-posts">
+                    <div class="recent-post">
+                        <div class="recent-post-image">JS</div>
+                        <div class="recent-post-content">
+                            <h4>JavaScript Performance Optimization Tips</h4>
+                            <div class="recent-post-date">January 14, 2025</div>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <div class="recent-post-image">AI</div>
+                        <div class="recent-post-content">
+                            <h4>AI-Powered Code Generation Tools</h4>
+                            <div class="recent-post-date">January 11, 2025</div>
+                        </div>
+                    </div>
+                    <div class="recent-post">
+                        <div class="recent-post-image">DB</div>
+                        <div class="recent-post-content">
+                            <h4>Database Design Patterns for Scalability</h4>
+                            <div class="recent-post-date">January 9, 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3>Categories</h3>
+                <div class="categories">
+                    <div class="category-item">
+                        <a href="#">Web Development</a>
+                        <span class="post-count">24</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#">JavaScript</a>
+                        <span class="post-count">18</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#">React</a>
+                        <span class="post-count">15</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#">Node.js</a>
+                        <span class="post-count">12</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#">DevOps</a>
+                        <span class="post-count">10</span>
+                    </div>
+                    <div class="category-item">
+                        <a href="#">Security</a>
+                        <span class="post-count">8</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3>Popular Tags</h3>
+                <div class="tags">
+                    <a href="#" class="tag">React</a>
+                    <a href="#" class="tag">JavaScript</a>
+                    <a href="#" class="tag">Node.js</a>
+                    <a href="#" class="tag">TypeScript</a>
+                    <a href="#" class="tag">CSS</a>
+                    <a href="#" class="tag">Docker</a>
+                    <a href="#" class="tag">AWS</a>
+                    <a href="#" class="tag">API</a>
+                    <a href="#" class="tag">Database</a>
+                    <a href="#" class="tag">Testing</a>
+                </div>
+            </div>
+
+            <div class="widget newsletter">
+                <h3>Newsletter</h3>
+                <p>Get weekly updates on the latest tech articles and tutorials delivered to your inbox.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email address">
+                    <button>Subscribe Now</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link">📧</a>
+                <a href="#" class="social-link">🐦</a>
+                <a href="#" class="social-link">💼</a>
+                <a href="#" class="social-link">📷</a>
+            </div>
+            <p>&copy; 2025 TechInsights. All rights reserved. Built with passion for technology and learning.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

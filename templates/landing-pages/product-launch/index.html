@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Launch - Revolutionary App Coming Soon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Marketplace Navigation */
+        .marketplace-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .marketplace-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .marketplace-nav a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 120px 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="%23ffffff" stroke-width="1" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .coming-soon-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .countdown-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            min-width: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Early Bird Section */
+        .early-bird {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .early-bird h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .pricing {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .original-price {
+            font-size: 1.2rem;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .early-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .discount-badge {
+            background: #ff4757;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .notify-form {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .notify-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .notify-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .notify-btn:hover {
+            background: #ff3742;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Features Preview */
+        .features-preview {
+            padding: 100px 0;
+            background: #f8fafc;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #718096;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 20px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .feature p {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            padding: 80px 0;
+            background: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-weight: 500;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .newsletter-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .newsletter-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a202c;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .countdown {
+                gap: 1rem;
+            }
+
+            .countdown-item {
+                min-width: 80px;
+                padding: 1rem;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .notify-form,
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .notify-btn,
+            .newsletter-btn {
+                width: 100%;
+            }
+
+            .features-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Marketplace Navigation -->
+    <div class="marketplace-nav">
+        <a href="../../../index.html">
+            <span>←</span>
+            <span>Back to Marketplace</span>
+        </a>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="coming-soon-badge">🚀 Coming Soon</div>
+                <h1>Revolutionary App<br>Changes Everything</h1>
+                <p class="hero-subtitle">
+                    The most anticipated productivity app of 2025 is almost here. Be among the first to experience the
+                    future of work.
+                </p>
+
+                <div class="countdown-container">
+                    <div class="countdown-title">Launch countdown:</div>
+                    <div class="countdown">
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="days">30</span>
+                            <span class="countdown-label">Days</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="hours">12</span>
+                            <span class="countdown-label">Hours</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="minutes">45</span>
+                            <span class="countdown-label">Minutes</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-number" id="seconds">30</span>
+                            <span class="countdown-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="early-bird">
+                    <h3>🔥 Early Bird Special</h3>
+                    <div class="pricing">
+                        <span class="original-price">$99</span>
+                        <span class="early-price">$49</span>
+                        <span class="discount-badge">50% OFF</span>
+                    </div>
+                    <p>Limited time offer for the first 1,000 subscribers!</p>
+                </div>
+
+                <form class="notify-form">
+                    <input type="email" class="notify-input" placeholder="Enter your email to get notified" required>
+                    <button type="submit" class="notify-btn pulse">Notify Me!</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-preview">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Makes It Special?</h2>
+                <p class="section-subtitle">
+                    Discover the groundbreaking features that will transform how you work and boost your productivity by
+                    300%.
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI-Powered Intelligence</h3>
+                    <p>Advanced AI that learns your workflow and automatically optimizes your tasks, saving you hours
+                        every day.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast Sync</h3>
+                    <p>Real-time synchronization across all your devices with sub-second updates and offline
+                        capabilities.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Beautiful Interface</h3>
+                    <p>Stunning, intuitive design that makes work feel effortless. Customizable themes and layouts for
+                        every style.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Enterprise Security</h3>
+                    <p>Bank-level encryption and security protocols protect your data with zero-knowledge architecture.
+                    </p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Seamless Collaboration</h3>
+                    <p>Work together in real-time with powerful collaboration tools and integrated communication
+                        features.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Smart Analytics</h3>
+                    <p>Detailed insights into your productivity patterns with actionable recommendations for
+                        improvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-proof">
+        <div class="container">
+            <h2 class="section-title">Join the Excitement</h2>
+            <p class="section-subtitle">Thousands are already waiting for launch day</p>
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number" data-target="25000">0</div>
+                    <div class="stat-label">Pre-registrations</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-label">Beta Testers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-target="98">0</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <h2>Stay in the Loop</h2>
+            <p>Get exclusive updates, beta access, and launch day notifications straight to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Revolutionary App. All rights reserved. The future is coming.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const launchDate = new Date();
+            launchDate.setDate(launchDate.getDate() + 30); // 30 days from now
+            launchDate.setHours(launchDate.getHours() + 12);
+            launchDate.setMinutes(launchDate.getMinutes() + 45);
+            launchDate.setSeconds(launchDate.getSeconds() + 30);
+
+            const now = new Date().getTime();
+            const distance = launchDate.getTime() - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            if (distance < 0) {
+                document.querySelector('.countdown-container').innerHTML = '<h2>🎉 We\'re Live!</h2>';
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Animate counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + (target === 98 ? '%' : '+');
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + (target === 98 ? '%' : '+');
+                    }
+                }, 20);
+            });
+        }
+
+        // Trigger counter animation when section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        observer.observe(document.querySelector('.social-proof'));
+
+        // Form submissions
+        document.querySelector('.notify-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            alert(`Thank you! You'll be notified at ${email} when we launch!`);
+            this.reset();
+        });
+
+        document.querySelector('.newsletter-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            alert(`Successfully subscribed ${email} to our newsletter!`);
+            this.reset();
+        });
+
+        // Add some dynamic effects
+        setInterval(() => {
+            const badge = document.querySelector('.coming-soon-badge');
+            badge.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                badge.style.transform = 'scale(1)';
+            }, 200);
+        }, 3000);
+    </script>
+</body>
+
+</html>

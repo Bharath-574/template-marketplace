@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Dashboard Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        /* Marketplace Navigation Button */
+        .back-to-marketplace {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #6366f1;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .back-to-marketplace:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+        }
+
+        .dashboard {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+        }
+
+        .sidebar {
+            background: #1e293b;
+            color: white;
+            padding: 2rem 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #6366f1;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #374151;
+        }
+
+        .main-content {
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .stat-label {
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive {
+            color: #059669;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .leads-table {
+            width: 100%;
+        }
+
+        .leads-table th {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .leads-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-new {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-qualified {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-proposal {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-time {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../../index.html" class="back-to-marketplace">← Back to Templates</a>
+
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="logo">CRM Pro</div>
+            <nav>
+                <div class="nav-item active">📊 Dashboard</div>
+                <div class="nav-item">👥 Contacts</div>
+                <div class="nav-item">🎯 Leads</div>
+                <div class="nav-item">💼 Deals</div>
+                <div class="nav-item">📈 Analytics</div>
+                <div class="nav-item">⚙️ Settings</div>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1>CRM Dashboard</h1>
+                <div style="display: flex; gap: 1rem;">
+                    <button
+                        style="background: #6366f1; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px;">Add
+                        Lead</button>
+                    <button
+                        style="background: transparent; color: #64748b; border: 1px solid #d1d5db; padding: 0.5rem 1rem; border-radius: 6px;">Export</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">1,234</div>
+                    <div class="stat-label">Total Leads</div>
+                    <div class="stat-change positive">↗ +12% from last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$45.6K</div>
+                    <div class="stat-label">Revenue</div>
+                    <div class="stat-change positive">↗ +8.2% from last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">Conversion Rate</div>
+                    <div class="stat-change positive">↗ +2.1% from last month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Active Deals</div>
+                    <div class="stat-change positive">↗ +5% from last month</div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">Recent Leads</div>
+                    <div class="card-content">
+                        <table class="leads-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Company</th>
+                                    <th>Status</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Smith</td>
+                                    <td>Acme Corp</td>
+                                    <td><span class="status-badge status-new">New</span></td>
+                                    <td>$5,200</td>
+                                </tr>
+                                <tr>
+                                    <td>Sarah Johnson</td>
+                                    <td>TechFlow</td>
+                                    <td><span class="status-badge status-qualified">Qualified</span></td>
+                                    <td>$12,800</td>
+                                </tr>
+                                <tr>
+                                    <td>Mike Wilson</td>
+                                    <td>StartupXYZ</td>
+                                    <td><span class="status-badge status-proposal">Proposal</span></td>
+                                    <td>$8,400</td>
+                                </tr>
+                                <tr>
+                                    <td>Emma Davis</td>
+                                    <td>InnovateCo</td>
+                                    <td><span class="status-badge status-new">New</span></td>
+                                    <td>$3,600</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Recent Activity</div>
+                    <div class="card-content">
+                        <div class="activity-item">
+                            <div class="activity-icon">📞</div>
+                            <div class="activity-content">
+                                <div>Called John Smith</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📧</div>
+                            <div class="activity-content">
+                                <div>Email sent to Sarah Johnson</div>
+                                <div class="activity-time">4 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">🤝</div>
+                            <div class="activity-content">
+                                <div>Meeting scheduled with Mike Wilson</div>
+                                <div class="activity-time">1 day ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">✅</div>
+                            <div class="activity-content">
+                                <div>Deal closed with Emma Davis</div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Wizard - Multi-Step Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Marketplace Navigation Button */
+        .marketplace-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .marketplace-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .marketplace-nav a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .marketplace-nav a:hover {
+            color: #2d3748;
+        }
+
+        .wizard-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            overflow: hidden;
+        }
+
+        .wizard-header {
+            background: #f8fafc;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .wizard-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .wizard-subtitle {
+            color: #64748b;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 33.33%;
+            transition: width 0.3s ease;
+        }
+
+        .step-indicators {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+            position: relative;
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -1rem;
+            transform: translateY(-50%);
+            width: 2rem;
+            height: 1px;
+            background: #cbd5e0;
+        }
+
+        .step-number {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-number {
+            background: #667eea;
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background: #10b981;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: #1a202c;
+        }
+
+        .wizard-content {
+            padding: 2rem;
+            min-height: 400px;
+        }
+
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(1rem);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox {
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: #667eea;
+        }
+
+        .wizard-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            width: 4rem;
+            height: 4rem;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .step-indicators {
+                padding: 1rem;
+            }
+
+            .wizard-content {
+                padding: 1.5rem;
+            }
+
+            .wizard-actions {
+                padding: 1.5rem;
+            }
+
+            .step-label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Marketplace Navigation -->
+    <div class="marketplace-nav">
+        <a href="../../../index.html">
+            <span>←</span>
+            <span>Back to Marketplace</span>
+        </a>
+    </div>
+
+    <div class="wizard-container">
+        <div class="wizard-header">
+            <h1 class="wizard-title">Create Your Account</h1>
+            <p class="wizard-subtitle">Complete the registration process in 3 simple steps</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="step-indicators">
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-label">Personal Info</div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-label">Account Details</div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-label">Preferences</div>
+            </div>
+        </div>
+
+        <form id="registrationForm">
+            <div class="wizard-content">
+                <!-- Step 1: Personal Information -->
+                <div class="step-content active" id="content1">
+                    <h3 style="margin-bottom: 1.5rem; color: #374151;">Personal Information</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="birthDate">Date of Birth</label>
+                            <input type="date" id="birthDate" name="birthDate" class="form-input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Account Details -->
+                <div class="step-content" id="content2">
+                    <h3 style="margin-bottom: 1.5rem; color: #374151;">Account Details</h3>
+
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username *</label>
+                        <input type="text" id="username" name="username" class="form-input" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="password">Password *</label>
+                            <input type="password" id="password" name="password" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="confirmPassword">Confirm Password *</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="company">Company (Optional)</label>
+                        <input type="text" id="company" name="company" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="jobTitle">Job Title (Optional)</label>
+                        <input type="text" id="jobTitle" name="jobTitle" class="form-input">
+                    </div>
+                </div>
+
+                <!-- Step 3: Preferences -->
+                <div class="step-content" id="content3">
+                    <h3 style="margin-bottom: 1.5rem; color: #374151;">Preferences</h3>
+
+                    <div class="form-group">
+                        <label class="form-label" for="interests">Areas of Interest</label>
+                        <select id="interests" name="interests" class="form-select" multiple>
+                            <option value="web-development">Web Development</option>
+                            <option value="mobile-apps">Mobile Apps</option>
+                            <option value="ui-design">UI Design</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="analytics">Analytics</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Communication Preferences</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="emailNotifications" name="emailNotifications" class="checkbox"
+                                checked>
+                            <label for="emailNotifications">Email notifications</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter" name="newsletter" class="checkbox">
+                            <label for="newsletter">Weekly newsletter</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="promotions" name="promotions" class="checkbox">
+                            <label for="promotions">Promotional emails</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="bio">Bio (Optional)</label>
+                        <textarea id="bio" name="bio" class="form-textarea" rows="4"
+                            placeholder="Tell us a bit about yourself..."></textarea>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" class="checkbox" required>
+                        <label for="terms">I agree to the Terms of Service and Privacy Policy *</label>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div class="step-content" id="success">
+                    <div class="success-message">
+                        <div class="success-icon">✓</div>
+                        <h3 style="color: #374151; margin-bottom: 1rem;">Registration Complete!</h3>
+                        <p style="color: #64748b; margin-bottom: 2rem;">Your account has been created successfully.
+                            Welcome aboard!</p>
+                        <button type="button" class="btn btn-primary" onclick="window.location.reload()">Start
+                            Over</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-actions" id="wizardActions">
+                <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">Previous</button>
+                <button type="button" id="nextBtn" class="btn btn-primary">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        class RegistrationWizard {
+            constructor() {
+                this.currentStep = 1;
+                this.totalSteps = 3;
+                this.formData = {};
+
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.updateProgress();
+            }
+
+            bindEvents() {
+                const nextBtn = document.getElementById('nextBtn');
+                const prevBtn = document.getElementById('prevBtn');
+                const form = document.getElementById('registrationForm');
+
+                nextBtn.addEventListener('click', () => this.nextStep());
+                prevBtn.addEventListener('click', () => this.prevStep());
+                form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+                // Real-time validation
+                document.querySelectorAll('input, select, textarea').forEach(field => {
+                    field.addEventListener('blur', () => this.validateField(field));
+                });
+            }
+
+            nextStep() {
+                if (this.validateCurrentStep()) {
+                    if (this.currentStep < this.totalSteps) {
+                        this.currentStep++;
+                        this.updateStep();
+                    } else {
+                        this.submitForm();
+                    }
+                }
+            }
+
+            prevStep() {
+                if (this.currentStep > 1) {
+                    this.currentStep--;
+                    this.updateStep();
+                }
+            }
+
+            updateStep() {
+                // Update step indicators
+                document.querySelectorAll('.step').forEach((step, index) => {
+                    step.classList.remove('active', 'completed');
+                    if (index + 1 === this.currentStep) {
+                        step.classList.add('active');
+                    } else if (index + 1 < this.currentStep) {
+                        step.classList.add('completed');
+                    }
+                });
+
+                // Update content
+                document.querySelectorAll('.step-content').forEach((content, index) => {
+                    content.classList.remove('active');
+                    if (index + 1 === this.currentStep) {
+                        content.classList.add('active');
+                    }
+                });
+
+                // Update buttons
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+
+                prevBtn.style.display = this.currentStep === 1 ? 'none' : 'inline-block';
+                nextBtn.textContent = this.currentStep === this.totalSteps ? 'Complete Registration' : 'Next';
+
+                this.updateProgress();
+            }
+
+            updateProgress() {
+                const progress = (this.currentStep / this.totalSteps) * 100;
+                document.getElementById('progressFill').style.width = `${progress}%`;
+            }
+
+            validateCurrentStep() {
+                const currentContent = document.getElementById(`content${this.currentStep}`);
+                const requiredFields = currentContent.querySelectorAll('[required]');
+                let isValid = true;
+
+                requiredFields.forEach(field => {
+                    if (!this.validateField(field)) {
+                        isValid = false;
+                    }
+                });
+
+                // Additional step-specific validations
+                if (this.currentStep === 2) {
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+
+                    if (password !== confirmPassword) {
+                        this.showFieldError(document.getElementById('confirmPassword'), 'Passwords do not match');
+                        isValid = false;
+                    }
+                }
+
+                return isValid;
+            }
+
+            validateField(field) {
+                const value = field.value.trim();
+
+                // Clear previous errors
+                this.clearFieldError(field);
+
+                if (field.hasAttribute('required') && !value) {
+                    this.showFieldError(field, 'This field is required');
+                    return false;
+                }
+
+                // Email validation
+                if (field.type === 'email' && value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(value)) {
+                        this.showFieldError(field, 'Please enter a valid email address');
+                        return false;
+                    }
+                }
+
+                // Password validation
+                if (field.type === 'password' && value && field.id === 'password') {
+                    if (value.length < 6) {
+                        this.showFieldError(field, 'Password must be at least 6 characters');
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            showFieldError(field, message) {
+                field.style.borderColor = '#ef4444';
+
+                let errorEl = field.nextElementSibling;
+                if (!errorEl || !errorEl.classList.contains('field-error')) {
+                    errorEl = document.createElement('div');
+                    errorEl.classList.add('field-error');
+                    errorEl.style.color = '#ef4444';
+                    errorEl.style.fontSize = '0.875rem';
+                    errorEl.style.marginTop = '0.25rem';
+                    field.parentNode.insertBefore(errorEl, field.nextSibling);
+                }
+                errorEl.textContent = message;
+            }
+
+            clearFieldError(field) {
+                field.style.borderColor = '#d1d5db';
+                const errorEl = field.nextElementSibling;
+                if (errorEl && errorEl.classList.contains('field-error')) {
+                    errorEl.remove();
+                }
+            }
+
+            submitForm() {
+                // Collect all form data
+                const formData = new FormData(document.getElementById('registrationForm'));
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+
+                // Simulate API call
+                setTimeout(() => {
+                    this.showSuccess();
+                }, 1000);
+            }
+
+            showSuccess() {
+                document.querySelectorAll('.step-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById('success').classList.add('active');
+                document.getElementById('wizardActions').style.display = 'none';
+            }
+
+            handleSubmit(e) {
+                e.preventDefault();
+                this.nextStep();
+            }
+        }
+
+        // Initialize wizard
+        document.addEventListener('DOMContentLoaded', () => {
+            new RegistrationWizard();
+        });
+    </script>
+</body>
+
+</html>

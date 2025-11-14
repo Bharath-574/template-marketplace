@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah's Journey - Personal Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            color: #333;
+            background: #fdf7f0;
+        }
+
+        /* Marketplace Navigation Button */
+        .back-to-marketplace {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #e67e22;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-marketplace:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #e67e22;
+            text-decoration: none;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 400;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: #e67e22;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="15" cy="90" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="30" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 30s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-100px, -100px) rotate(360deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            font-family: 'Georgia', serif;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-cta:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        /* About Section */
+        .about-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 4rem;
+            border-left: 5px solid #e67e22;
+        }
+
+        .about-section h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            font-family: 'Georgia', serif;
+        }
+
+        .about-section p {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e67e22;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Blog Posts */
+        .blog-section h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 400;
+            font-family: 'Georgia', serif;
+        }
+
+        .posts-grid {
+            display: grid;
+            gap: 2.5rem;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            border-left-color: #e67e22;
+        }
+
+        .post-image {
+            height: 250px;
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .post-content {
+            padding: 2rem;
+        }
+
+        .post-date {
+            color: #e67e22;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            font-style: italic;
+        }
+
+        .post-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            line-height: 1.4;
+            font-family: 'Georgia', serif;
+        }
+
+        .post-excerpt {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.98rem;
+        }
+
+        .read-more {
+            color: #e67e22;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 1rem;
+        }
+
+        /* Categories */
+        .categories-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin: 4rem 0;
+        }
+
+        .categories-section h2 {
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 400;
+            font-family: 'Georgia', serif;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: #fdf7f0;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #555;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .category-item:hover {
+            background: #e67e22;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .category-name {
+            font-weight: 500;
+        }
+
+        .post-count {
+            background: rgba(230, 126, 34, 0.2);
+            color: #e67e22;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover .post-count {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '✉️';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.1;
+        }
+
+        .newsletter-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-family: 'Georgia', serif;
+        }
+
+        .newsletter-section p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form button {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: #d35400;
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            background: #34495e;
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 5%;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .main-content {
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+
+            .about-section,
+            .categories-section,
+            .newsletter-section {
+                padding: 2rem;
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+
+            .about-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../../index.html" class="back-to-marketplace">← Back to Templates</a>
+
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">Sarah's Journey</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#travel">Travel</a></li>
+                <li><a href="#lifestyle">Lifestyle</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to My World</h1>
+            <p>Join me as I explore life, share stories, and discover the beauty in everyday moments. This is where my
+                heart speaks freely.</p>
+            <a href="#about" class="hero-cta">Get to Know Me</a>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <section class="about-section" id="about">
+            <h2>Hello, I'm Sarah</h2>
+            <p>Welcome to my little corner of the internet! I'm a 28-year-old writer, traveler, and coffee enthusiast
+                living in Portland, Oregon. This blog is where I share my adventures, thoughts, and the little moments
+                that make life beautiful.</p>
+            <p>When I'm not writing, you can find me exploring local coffee shops, hiking in the Pacific Northwest, or
+                curled up with a good book and my cat, Luna. I believe in the power of storytelling to connect us all,
+                and I hope my words resonate with you in some way.</p>
+            <p>Thank you for being here and being part of this journey with me. Every story is better when shared with
+                friends, and that's exactly what I hope we become.</p>
+
+            <div class="about-stats">
+                <div class="stat">
+                    <span class="stat-number">150+</span>
+                    <span class="stat-label">Blog Posts</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">Countries Visited</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Years Writing</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">2k+</span>
+                    <span class="stat-label">Readers</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <h2>Latest Stories</h2>
+            <div class="posts-grid">
+                <article class="post-card">
+                    <div class="post-image">🌸</div>
+                    <div class="post-content">
+                        <div class="post-date">January 15, 2025</div>
+                        <h3 class="post-title">Finding Peace in Portland's Cherry Blossoms</h3>
+                        <p class="post-excerpt">Spring in Portland brings something magical - the cherry blossoms bloom
+                            and the entire city transforms into a pink paradise. Yesterday, I spent the afternoon
+                            wandering through Tom McCall Waterfront Park, watching petals dance in the breeze and
+                            reflecting on how these fleeting moments of beauty remind us to slow down and appreciate the
+                            present.</p>
+                        <a href="#" class="read-more">Continue Reading →</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-image">☕</div>
+                    <div class="post-content">
+                        <div class="post-date">January 12, 2025</div>
+                        <h3 class="post-title">The Perfect Morning Ritual: Coffee and Gratitude</h3>
+                        <p class="post-excerpt">There's something sacred about those first few minutes of the morning,
+                            when the world is still quiet and possibility fills the air. For me, it starts with the
+                            sound of coffee brewing and a few moments of gratitude. Today I'm sharing my morning ritual
+                            and how it's transformed my entire approach to each new day.</p>
+                        <a href="#" class="read-more">Continue Reading →</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-image">📖</div>
+                    <div class="post-content">
+                        <div class="post-date">January 10, 2025</div>
+                        <h3 class="post-title">Books That Changed My Perspective in 2024</h3>
+                        <p class="post-excerpt">Last year, I read 52 books - one for each week. Some made me laugh,
+                            others made me cry, but a few truly changed how I see the world. From memoirs that opened my
+                            heart to fiction that expanded my imagination, these are the stories that left the deepest
+                            impact on my soul.</p>
+                        <a href="#" class="read-more">Continue Reading →</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-image">🏔️</div>
+                    <div class="post-content">
+                        <div class="post-date">January 8, 2025</div>
+                        <h3 class="post-title">Solo Hiking Adventures: Lessons from the Trail</h3>
+                        <p class="post-excerpt">Last weekend's solo hike to Multnomah Falls reminded me why I love these
+                            solitary adventures. There's something profound about being alone with nature, your
+                            thoughts, and the rhythm of your own footsteps. Here are the life lessons the trail has
+                            taught me about courage, solitude, and self-discovery.</p>
+                        <a href="#" class="read-more">Continue Reading →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="categories-section">
+            <h2>Explore by Category</h2>
+            <div class="categories-grid">
+                <a href="#" class="category-item">
+                    <span class="category-name">Travel Stories</span>
+                    <span class="post-count">28</span>
+                </a>
+                <a href="#" class="category-item">
+                    <span class="category-name">Daily Reflections</span>
+                    <span class="post-count">45</span>
+                </a>
+                <a href="#" class="category-item">
+                    <span class="category-name">Book Reviews</span>
+                    <span class="post-count">32</span>
+                </a>
+                <a href="#" class="category-item">
+                    <span class="category-name">Coffee Culture</span>
+                    <span class="post-count">19</span>
+                </a>
+                <a href="#" class="category-item">
+                    <span class="category-name">Wellness</span>
+                    <span class="post-count">15</span>
+                </a>
+                <a href="#" class="category-item">
+                    <span class="category-name">Photography</span>
+                    <span class="post-count">22</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <h2>Stay Connected</h2>
+            <p>Subscribe to receive my latest stories and updates delivered straight to your inbox. No spam, just
+                heartfelt stories and genuine connections.</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email address">
+                <button type="submit">Subscribe</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" class="social-link">📧</a>
+                <a href="#" class="social-link">📷</a>
+                <a href="#" class="social-link">🐦</a>
+                <a href="#" class="social-link">💼</a>
+            </div>
+            <p>&copy; 2025 Sarah's Journey. Written with love from Portland, Oregon. ❤️</p>
+        </div>
+    </footer>
+</body>
+
+</html>

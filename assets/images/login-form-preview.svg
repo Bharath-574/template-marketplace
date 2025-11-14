@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f8fafc"/>
+  <rect x="50" y="50" width="300" height="200" rx="12" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <rect x="70" y="80" width="40" height="40" rx="20" fill="#3b82f6"/>
+  <text x="90" y="100" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" fill="white">👤</text>
+  
+  <rect x="130" y="85" width="200" height="12" rx="6" fill="#e2e8f0"/>
+  <rect x="130" y="105" width="120" height="8" rx="4" fill="#cbd5e1"/>
+  
+  <rect x="70" y="140" width="260" height="12" rx="6" fill="#e2e8f0"/>
+  <rect x="70" y="160" width="260" height="12" rx="6" fill="#e2e8f0"/>
+  
+  <rect x="70" y="190" width="120" height="35" rx="8" fill="#3b82f6"/>
+  <text x="130" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="white">Sign In</text>
+  
+  <rect x="210" y="190" width="120" height="35" rx="8" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+  <text x="270" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="#3b82f6">Sign Up</text>
+  
+  <text x="200" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#64748b">Login Form Template</text>
+</svg>

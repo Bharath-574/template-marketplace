@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Marketplace - Ready-to-Use Web Templates</title>
+    <meta name="description"
+        content="Discover and download professional web templates. Ready-to-use components, landing pages, forms, and more.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/enhanced-features.css">
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i data-lucide="layout-template"></i>
+                    TemplateHub
+                </div>
+
+                <nav class="nav">
+                    <a href="#" class="nav-link active">Templates</a>
+                    <a href="#categories" class="nav-link">Categories</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#" class="nav-link" data-action="manage-collections">Collections</a>
+                    <a href="auth/login.html" class="nav-link">Login</a>
+                    <a href="admin/dashboard.html" class="nav-link">Admin</a>
+                </nav>
+
+                <div class="flex items-center" style="gap: 1rem;">
+                    <a href="admin/dashboard.html" class="btn btn-secondary btn-sm">
+                        <i data-lucide="settings"></i>
+                        Admin
+                    </a>
+                    <button id="mobile-menu-btn" class="btn btn-secondary btn-sm md:hidden">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Professional Web Templates</h1>
+                <p class="hero-subtitle">Ready-to-use, fully responsive templates for your next project</p>
+                <button id="test-templates" class="btn btn-primary" style="margin-top: 1rem;">
+                    🔧 Test Template Loading
+                </button>
+
+                <div class="flex justify-center" style="gap: 1rem; margin-top: 2rem;">
+                    <a href="#templates" class="btn btn-accent btn-lg">
+                        <i data-lucide="download"></i>
+                        Browse Templates
+                    </a>
+                    <a href="#categories" class="btn btn-outline btn-lg" style="border-color: white; color: white;">
+                        <i data-lucide="grid-3x3"></i>
+                        Categories
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="section">
+            <div class="container">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-templates">45+</div>
+                        <div class="stat-label">Templates Available</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-downloads">1.2K+</div>
+                        <div class="stat-label">Downloads</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-categories">8</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Free & Open Source</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filters -->
+        <section class="search-section" id="search">
+            <div class="container">
+                <div class="search-container">
+                    <div class="form-group mb-0">
+                        <div class="search-input">
+                            <i data-lucide="search" class="search-icon"></i>
+                            <input type="text" id="search-input" class="form-input" placeholder="Search templates...">
+                        </div>
+                    </div>
+                    <div class="filters">
+                        <select id="category-filter" class="form-select">
+                            <option value="">All Categories</option>
+                            <option value="landing-pages">Landing Pages</option>
+                            <option value="login-forms">Login Forms</option>
+                            <option value="registration-forms">Registration Forms</option>
+                            <option value="ecommerce">E-commerce</option>
+                            <option value="dashboards">Dashboards</option>
+                            <option value="portfolios">Portfolios</option>
+                            <option value="blogs">Blogs</option>
+                            <option value="pricing">Pricing</option>
+                        </select>
+
+                        <select id="sort-filter" class="form-select">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="popular">Most Popular</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Templates Grid -->
+        <section class="section" id="templates">
+            <div class="container">
+                <h2 class="section-title">Featured Templates</h2>
+
+                <!-- Loading State -->
+                <div id="loading-state" class="text-center">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    <p class="mt-2 text-gray-600">Loading templates...</p>
+                </div>
+
+                <!-- Templates Grid -->
+                <div id="templates-grid" class="template-grid">
+                    <!-- Templates will be loaded dynamically -->
+                </div>
+
+                <!-- No Results -->
+                <div id="no-results" class="text-center hidden" style="padding: 3rem 0;">
+                    <i data-lucide="search-x"
+                        style="width: 3rem; height: 3rem; color: var(--gray-400); margin: 0 auto 1rem;"></i>
+                    <h3>No templates found</h3>
+                    <p class="text-gray-600">Try adjusting your search criteria or browse all categories.</p>
+                    <button id="clear-filters" class="btn btn-primary mt-3">Clear Filters</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="section bg-gray-50" id="categories">
+            <div class="container">
+                <h2 class="section-title">Browse by Category</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4" style="gap: 1.5rem;">
+                    <div class="category-card card text-center" data-category="landing-pages">
+                        <i data-lucide="layout"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">Landing Pages</h3>
+                        <p class="text-gray-600 text-sm mb-0">Professional landing pages</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="landing-pages-count">1 template</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card card text-center" data-category="login-forms">
+                        <i data-lucide="log-in"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">Login Forms</h3>
+                        <p class="text-gray-600 text-sm mb-0">Authentication interfaces</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="login-forms-count">1 template</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card card text-center" data-category="registration-forms">
+                        <i data-lucide="user-plus"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">Registration</h3>
+                        <p class="text-gray-600 text-sm mb-0">Sign-up forms</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="registration-forms-count">1 template</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card card text-center" data-category="ecommerce">
+                        <i data-lucide="shopping-cart"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">E-commerce</h3>
+                        <p class="text-gray-600 text-sm mb-0">Shopping & product displays</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="ecommerce-count">1 template</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card card text-center" data-category="dashboards">
+                        <i data-lucide="bar-chart-3"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">Dashboards</h3>
+                        <p class="text-gray-600 text-sm mb-0">Admin & analytics dashboards</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="dashboards-count">1 template</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card card text-center" data-category="portfolios">
+                        <i data-lucide="briefcase"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">Portfolios</h3>
+                        <p class="text-gray-600 text-sm mb-0">Personal & professional portfolios</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="portfolios-count">1 template</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card card text-center" data-category="blogs">
+                        <i data-lucide="edit"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">Blogs</h3>
+                        <p class="text-gray-600 text-sm mb-0">Blog & article layouts</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="blogs-count">1 template</span>
+                        </div>
+                    </div>
+
+                    <div class="category-card card text-center" data-category="pricing">
+                        <i data-lucide="dollar-sign"
+                            style="width: 2rem; height: 2rem; margin: 0 auto 1rem; color: var(--primary);"></i>
+                        <h3 class="card-title mb-1">Pricing</h3>
+                        <p class="text-gray-600 text-sm mb-0">Pricing tables & plans</p>
+                        <div class="mt-2">
+                            <span class="tag primary" id="pricing-count">1 template</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about">
+            <div class="container">
+                <div class="text-center" style="max-width: 800px; margin: 0 auto;">
+                    <h2 class="section-title">Why Choose TemplateHub?</h2>
+                    <div class="grid md:grid-cols-3" style="gap: 2rem; margin-top: 3rem;">
+                        <div class="text-center">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 bg-primary text-white rounded-xl mb-4">
+                                <i data-lucide="zap"></i>
+                            </div>
+                            <h3>Plug & Play</h3>
+                            <p class="text-gray-600">Copy the link and start using templates instantly in your projects.
+                            </p>
+                        </div>
+
+                        <div class="text-center">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 bg-accent text-white rounded-xl mb-4">
+                                <i data-lucide="smartphone"></i>
+                            </div>
+                            <h3>Fully Responsive</h3>
+                            <p class="text-gray-600">All templates work perfectly on mobile, tablet, and desktop
+                                devices.</p>
+                        </div>
+
+                        <div class="text-center">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 bg-warning text-white rounded-xl mb-4">
+                                <i data-lucide="heart"></i>
+                            </div>
+                            <h3>Open Source</h3>
+                            <p class="text-gray-600">100% free templates with clean, well-documented code.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo mb-4">
+                        <i data-lucide="layout-template"></i>
+                        TemplateHub
+                    </div>
+                    <p class="text-gray-300">Professional web templates for developers and designers. Build faster,
+                        launch sooner.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Templates</h4>
+                    <a href="#templates">All Templates</a>
+                    <a href="#categories">Categories</a>
+                    <a href="#">Popular</a>
+                    <a href="#">New Releases</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="docs/setup.md">Documentation</a>
+                    <a href="docs/api.md">API Guide</a>
+                    <a href="#">Support</a>
+                    <a href="#">FAQ</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <a href="#">GitHub</a>
+                    <a href="#">Discord</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Contribute</a>
+                </div>
+            </div>
+
+            <div
+                style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--gray-600);">
+                <p class="text-gray-400">&copy; 2025 TemplateHub. Built with ❤️ for the developer community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Template Detail Modal -->
+    <div id="template-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50" style="z-index: 9999;">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl max-w-4xl w-full max-h-90vh overflow-hidden">
+                <div class="flex justify-between items-center p-6 border-b">
+                    <h3 id="modal-title" class="text-2xl font-bold">Template Details</h3>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+
+                <div class="p-6 overflow-y-auto" style="max-height: 70vh;">
+                    <div id="modal-content">
+                        <!-- Content loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/templates.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/init.js"></script>
+
+    <script>
+        // Enhanced initialization and testing script
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('🚀 Template Marketplace - Initializing...');
+
+            const testBtn = document.getElementById('test-templates');
+            if (testBtn) {
+                testBtn.addEventListener('click', function () {
+                    console.log('🔧 Testing template loading...');
+
+                    if (window.templateManager) {
+                        try {
+                            window.templateManager.loadTemplates();
+                            Utils.showNotification('✅ Templates reloaded successfully! Check the grid below.', 'success');
+
+                            // Scroll to templates section
+                            const templatesGrid = document.getElementById('templates-grid');
+                            if (templatesGrid) {
+                                templatesGrid.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        } catch (error) {
+                            console.error('❌ Error loading templates:', error);
+                            Utils.showNotification('Failed to reload templates: ' + error.message, 'error');
+                        }
+                    } else {
+                        Utils.showNotification('❌ TemplateManager not available', 'error');
+                        console.error('TemplateManager is not initialized');
+                    }
+                });
+            }
+
+            // Enhanced debug info with error handling
+            setTimeout(() => {
+                try {
+                    if (window.dataManager) {
+                        const templates = window.dataManager.getAllTemplates();
+                        console.log(`📊 Found ${templates.length} templates in DataManager`);
+
+                        // Test template categories
+                        const categories = window.dataManager.getAllCategories();
+                        console.log(`📂 Found ${categories.length} categories`);
+                    } else {
+                        console.warn('⚠️ DataManager not available');
+                    }
+
+                    if (window.templateManager) {
+                        console.log('✅ TemplateManager is available and ready');
+                    } else {
+                        console.error('❌ TemplateManager is not available');
+                    }
+
+                    // Test utilities
+                    if (window.Utils) {
+                        console.log('🛠️ Utils loaded successfully');
+                    } else {
+                        console.error('❌ Utils not available');
+                    }
+
+                    // Test Lucide icons
+                    if (window.lucide) {
+                        console.log('🎨 Lucide icons loaded');
+                        lucide.createIcons();
+                    } else {
+                        console.warn('⚠️ Lucide icons not loaded');
+                    }
+                } catch (error) {
+                    console.error('❌ Error during initialization check:', error);
+                }
+            }, 1000);
+
+            // Test search functionality
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    if (this.value.length > 2) {
+                        console.log(`🔍 Searching for: ${this.value}`);
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

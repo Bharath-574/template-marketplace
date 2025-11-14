@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Analytics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+
+        /* Marketplace Navigation Button */
+        .marketplace-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .marketplace-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .marketplace-nav a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .marketplace-nav a:hover {
+            color: #2d3748;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: #e2e8f0;
+        }
+
+        .template-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: none;
+            border: none;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-btn:hover {
+            color: #2d3748;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            margin-top: 10px;
+            z-index: 1001;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .template-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 8px 15px;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        .dropdown-category {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #9ca3af;
+            font-weight: 600;
+            padding: 8px 15px 4px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .dropdown-category:first-child {
+            border-top: none;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo h2 {
+            color: #4f46e5;
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            color: #64748b;
+            transition: all 0.2s ease;
+            border-right: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #f1f5f9;
+            color: #4f46e5;
+            border-right-color: #4f46e5;
+        }
+
+        .nav-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon.blue {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .stat-icon.green {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .stat-icon.purple {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+
+        .stat-icon.orange {
+            background: #fed7aa;
+            color: #ea580c;
+        }
+
+        .stat-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+
+        .stat-change.positive {
+            color: #16a34a;
+        }
+
+        .stat-change.negative {
+            color: #dc2626;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            border: 2px dashed #cbd5e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 45%, rgba(79, 70, 229, 0.1) 50%, transparent 55%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #f8fafc;
+            padding: 0.75rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .data-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .user-avatar {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .notification-badge {
+            position: relative;
+        }
+
+        .notification-badge::after {
+            content: '3';
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table {
+                font-size: 0.875rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Marketplace Navigation -->
+    <div class="marketplace-nav">
+        <a href="../../../index.html">
+            <span>←</span>
+            <span>Back to Marketplace</span>
+        </a>
+        <div class="nav-divider"></div>
+        <div class="template-dropdown">
+            <button class="dropdown-btn">
+                Templates <span style="font-size: 12px;">▼</span>
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-category">Portfolios</div>
+                <a href="../../portfolios/showcase/index.html">Creative Portfolio</a>
+
+                <div class="dropdown-category">Landing Pages</div>
+                <a href="../../landing-pages/modern-landing/index.html">Modern Landing</a>
+
+                <div class="dropdown-category">Forms</div>
+                <a href="../../registration-forms/wizard/index.html">Registration Wizard</a>
+                <a href="../../login-forms/animated-login/index.html">Animated Login</a>
+
+                <div class="dropdown-category">E-commerce</div>
+                <a href="../../ecommerce/product-cards/index.html">Product Cards</a>
+                <a href="../../cards/product-grid/index.html">Product Grid</a>
+
+                <div class="dropdown-category">Blog & Content</div>
+                <a href="../../blogs/article/index.html">Article Blog</a>
+
+                <div class="dropdown-category">Pricing</div>
+                <a href="../../pricing/tables/index.html">Pricing Tables</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Dashboard</h2>
+            </div>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z">
+                                </path>
+                            </svg>
+                            Overview
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z">
+                                </path>
+                            </svg>
+                            Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 class="page-title">Dashboard Overview</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary notification-badge">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="user-avatar">JD</div>
+                    <button class="btn btn-primary">New Report</button>
+                </div>
+            </header>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="stat-value">12,483</div>
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-change positive">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        +12.3% from last month
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="stat-value">$34,567</div>
+                    <div class="stat-label">Revenue</div>
+                    <div class="stat-change positive">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        +8.7% from last month
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-value">847</div>
+                    <div class="stat-label">Orders</div>
+                    <div class="stat-change negative">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        -3.2% from last month
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-value">94.8%</div>
+                    <div class="stat-label">Success Rate</div>
+                    <div class="stat-change positive">
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        +2.1% from last month
+                    </div>
+                </div>
+            </section>
+
+            <section class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Revenue Analytics</h3>
+                        <button class="btn btn-secondary">View Details</button>
+                    </div>
+                    <div class="chart-placeholder">
+                        <div>
+                            <svg width="48" height="48" fill="currentColor" viewBox="0 0 20 20"
+                                style="margin-bottom: 1rem;">
+                                <path fill-rule="evenodd"
+                                    d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <div>Interactive Chart Component</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Traffic Sources</h3>
+                        <button class="btn btn-secondary">Export</button>
+                    </div>
+                    <div class="chart-placeholder">
+                        <div>
+                            <svg width="48" height="48" fill="currentColor" viewBox="0 0 20 20"
+                                style="margin-bottom: 1rem;">
+                                <path d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5z"></path>
+                            </svg>
+                            <div>Pie Chart Component</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="table-card">
+                <div class="table-header">
+                    <h3 class="table-title">Recent Transactions</h3>
+                    <button class="btn btn-secondary">View All</button>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionTableBody">
+                        <!-- Table rows will be generated by JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        class Dashboard {
+            constructor() {
+                this.transactions = [
+                    { id: 'TXN-001', user: 'John Doe', amount: 1250.00, status: 'completed', date: '2024-01-15' },
+                    { id: 'TXN-002', user: 'Sarah Smith', amount: 890.50, status: 'pending', date: '2024-01-15' },
+                    { id: 'TXN-003', user: 'Mike Johnson', amount: 2100.00, status: 'completed', date: '2024-01-14' },
+                    { id: 'TXN-004', user: 'Emily Davis', amount: 450.75, status: 'failed', date: '2024-01-14' },
+                    { id: 'TXN-005', user: 'Robert Wilson', amount: 1650.25, status: 'completed', date: '2024-01-13' },
+                    { id: 'TXN-006', user: 'Lisa Anderson', amount: 325.00, status: 'pending', date: '2024-01-13' },
+                    { id: 'TXN-007', user: 'David Brown', amount: 875.50, status: 'completed', date: '2024-01-12' }
+                ];
+
+                this.init();
+            }
+
+            init() {
+                this.renderTransactions();
+                this.bindEvents();
+                this.animateStats();
+            }
+
+            bindEvents() {
+                // Navigation
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.setActiveNav(link);
+                    });
+                });
+
+                // Mock real-time updates
+                this.startRealTimeUpdates();
+            }
+
+            setActiveNav(activeLink) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                activeLink.classList.add('active');
+            }
+
+            renderTransactions() {
+                const tbody = document.getElementById('transactionTableBody');
+                tbody.innerHTML = this.transactions.map(transaction => `
+                    <tr>
+                        <td style="font-family: monospace; font-weight: 600;">${transaction.id}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div class="user-avatar">${this.getInitials(transaction.user)}</div>
+                                ${transaction.user}
+                            </div>
+                        </td>
+                        <td style="font-weight: 600;">$${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+                        <td>
+                            <span class="status-badge ${this.getStatusClass(transaction.status)}">
+                                ${transaction.status}
+                            </span>
+                        </td>
+                        <td>${this.formatDate(transaction.date)}</td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" 
+                                    onclick="dashboard.viewTransaction('${transaction.id}')">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            getInitials(name) {
+                return name.split(' ').map(n => n[0]).join('').toUpperCase();
+            }
+
+            getStatusClass(status) {
+                switch (status) {
+                    case 'completed': return 'status-success';
+                    case 'pending': return 'status-warning';
+                    case 'failed': return 'status-error';
+                    default: return '';
+                }
+            }
+
+            formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+            }
+
+            viewTransaction(id) {
+                const transaction = this.transactions.find(t => t.id === id);
+                alert(`Transaction Details:\n\nID: ${transaction.id}\nUser: ${transaction.user}\nAmount: $${transaction.amount}\nStatus: ${transaction.status}\nDate: ${transaction.date}`);
+            }
+
+            animateStats() {
+                const statValues = document.querySelectorAll('.stat-value');
+                statValues.forEach((stat, index) => {
+                    const finalValue = stat.textContent;
+                    stat.textContent = '0';
+
+                    setTimeout(() => {
+                        this.animateValue(stat, finalValue);
+                    }, index * 200);
+                });
+            }
+
+            animateValue(element, finalValue) {
+                const isPercent = finalValue.includes('%');
+                const isCurrency = finalValue.includes('$');
+                const numericValue = parseFloat(finalValue.replace(/[$,%]/g, ''));
+
+                let currentValue = 0;
+                const increment = numericValue / 50;
+                const timer = setInterval(() => {
+                    currentValue += increment;
+
+                    if (currentValue >= numericValue) {
+                        currentValue = numericValue;
+                        clearInterval(timer);
+                    }
+
+                    let displayValue = Math.floor(currentValue).toLocaleString();
+
+                    if (isCurrency) {
+                        displayValue = '$' + displayValue;
+                    } else if (isPercent) {
+                        displayValue = currentValue.toFixed(1) + '%';
+                    }
+
+                    element.textContent = displayValue;
+                }, 20);
+            }
+
+            startRealTimeUpdates() {
+                // Simulate real-time stat updates
+                setInterval(() => {
+                    this.updateRandomStat();
+                }, 10000);
+            }
+
+            updateRandomStat() {
+                const stats = document.querySelectorAll('.stat-value');
+                const randomStat = stats[Math.floor(Math.random() * stats.length)];
+                const currentValue = randomStat.textContent;
+
+                // Add a subtle flash effect
+                randomStat.style.transition = 'color 0.3s ease';
+                randomStat.style.color = '#4f46e5';
+
+                setTimeout(() => {
+                    randomStat.style.color = '#1a202c';
+                }, 300);
+            }
+        }
+
+        // Initialize dashboard
+        let dashboard;
+        document.addEventListener('DOMContentLoaded', () => {
+            dashboard = new Dashboard();
+        });
+
+        // Mobile menu toggle (for responsive version)
+        function toggleMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('mobile-open');
+        }
+    </script>
+</body>
+
+</html>

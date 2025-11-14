@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - TemplateHub</title>
+    <meta name="description" content="Create your TemplateHub account">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+
+<body class="auth-body">
+    <!-- Header -->
+    <header class="auth-header">
+        <div class="container">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="logo">
+                    <i data-lucide="layout-template"></i>
+                    TemplateHub
+                </a>
+
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-600">Already have an account?</span>
+                    <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header-content">
+                    <h1 class="auth-title">Create Account</h1>
+                    <p class="auth-subtitle">Join TemplateHub and access premium templates</p>
+                </div>
+
+                <form id="register-form" class="auth-form">
+                    <div class="grid md:grid-cols-2" style="gap: 1rem;">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="form-input"
+                                placeholder="Enter your first name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-input"
+                                placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="password" name="password" class="form-input"
+                                placeholder="Create a password" required minlength="6">
+                            <button type="button" class="password-toggle" id="password-toggle"
+                                aria-label="Toggle password visibility">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-requirements">
+                            <div class="requirement" id="length-req">
+                                <i data-lucide="check"></i>
+                                At least 6 characters
+                            </div>
+                            <div class="requirement" id="uppercase-req">
+                                <i data-lucide="check"></i>
+                                One uppercase letter
+                            </div>
+                            <div class="requirement" id="number-req">
+                                <i data-lucide="check"></i>
+                                One number
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input"
+                                placeholder="Confirm your password" required>
+                            <button type="button" class="password-toggle" id="confirm-password-toggle"
+                                aria-label="Toggle password visibility">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role" class="form-label">Account Type</label>
+                        <select id="role" name="role" class="form-select" required>
+                            <option value="">Select account type</option>
+                            <option value="developer">Developer</option>
+                            <option value="designer">Designer</option>
+                            <option value="business">Business Owner</option>
+                            <option value="student">Student</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-checkboxes">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="terms" class="checkbox-input" required>
+                            <span class="checkbox-custom"></span>
+                            I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#"
+                                class="terms-link">Privacy Policy</a>
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="newsletter" class="checkbox-input">
+                            <span class="checkbox-custom"></span>
+                            Subscribe to our newsletter for updates and new templates
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full" id="register-btn">
+                        <span class="btn-text">Create Account</span>
+                        <div class="btn-loading hidden">
+                            <div class="spinner"></div>
+                            Creating account...
+                        </div>
+                    </button>
+
+                    <div class="auth-divider">
+                        <span>or sign up with</span>
+                    </div>
+
+                    <div class="social-auth">
+                        <button type="button" class="btn btn-social" id="google-register">
+                            <svg class="social-icon" viewBox="0 0 24 24">
+                                <path fill="#4285F4"
+                                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                                <path fill="#34A853"
+                                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                                <path fill="#FBBC05"
+                                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                                <path fill="#EA4335"
+                                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                            </svg>
+                            Continue with Google
+                        </button>
+
+                        <button type="button" class="btn btn-social" id="github-register">
+                            <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                            </svg>
+                            Continue with GitHub
+                        </button>
+                    </div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Sign in now</a></p>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="auth-benefits">
+                <h3>Why join TemplateHub?</h3>
+                <div class="benefit-list">
+                    <div class="benefit-item">
+                        <i data-lucide="download"></i>
+                        <div>
+                            <strong>Free Downloads</strong>
+                            <span>Access hundreds of free templates</span>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <i data-lucide="zap"></i>
+                        <div>
+                            <strong>Instant Access</strong>
+                            <span>Download and use templates immediately</span>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <i data-lucide="code"></i>
+                        <div>
+                            <strong>Clean Code</strong>
+                            <span>Well-structured, maintainable code</span>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <i data-lucide="smartphone"></i>
+                        <div>
+                            <strong>Mobile Ready</strong>
+                            <span>Fully responsive designs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initialize auth
+        document.addEventListener('DOMContentLoaded', function () {
+            AuthManager.initRegister();
+        });
+    </script>
+
+    <style>
+        /* Registration-specific styles extending auth styles from login.html */
+        .auth-body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .auth-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        .auth-header .logo {
+            color: white;
+            font-weight: 600;
+        }
+
+        .auth-header .btn-outline {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-header .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .auth-header-content {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: var(--gray-600);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: var(--radius);
+        }
+
+        .password-toggle:hover {
+            color: var(--gray-600);
+        }
+
+        .password-requirements {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: var(--font-sm);
+            color: var(--gray-500);
+            transition: var(--transition-fast);
+        }
+
+        .requirement i {
+            width: 1rem;
+            height: 1rem;
+            opacity: 0.5;
+        }
+
+        .requirement.valid {
+            color: var(--accent);
+        }
+
+        .requirement.valid i {
+            opacity: 1;
+        }
+
+        .form-checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: var(--font-sm);
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        .checkbox-input {
+            display: none;
+        }
+
+        .checkbox-custom {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .checkbox-input:checked+.checkbox-custom {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .checkbox-input:checked+.checkbox-custom::after {
+            content: '✓';
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .terms-link {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-loading {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .auth-divider {
+            position: relative;
+            text-align: center;
+            color: var(--gray-500);
+            font-size: var(--font-sm);
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gray-200);
+            z-index: 1;
+        }
+
+        .auth-divider span {
+            background: white;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-auth {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-social {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-200);
+            background: white;
+            color: var(--gray-700);
+            font-weight: 500;
+            border-radius: var(--radius-lg);
+            transition: var(--transition-fast);
+        }
+
+        .btn-social:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
+        }
+
+        .social-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            color: var(--gray-600);
+            font-size: var(--font-sm);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-benefits {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .auth-benefits h3 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .benefit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .benefit-item i {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-item div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .benefit-item strong {
+            font-weight: 600;
+        }
+
+        .benefit-item span {
+            font-size: var(--font-sm);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 640px) {
+            .auth-main {
+                padding: 1rem;
+            }
+
+            .auth-card {
+                padding: 1.5rem;
+            }
+
+            .auth-title {
+                font-size: 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f8fafc"/>
+  
+  <circle cx="100" cy="80" r="30" fill="#e5e7eb"/>
+  <text x="100" y="88" text-anchor="middle" font-family="Inter, sans-serif" font-size="24" fill="#6b7280">👤</text>
+  
+  <rect x="50" y="120" width="100" height="12" rx="6" fill="#1f2937"/>
+  <rect x="70" y="140" width="60" height="8" rx="4" fill="#6b7280"/>
+  
+  <rect x="50" y="170" width="80" height="80" rx="8" fill="#e5e7eb"/>
+  <rect x="140" y="170" width="80" height="80" rx="8" fill="#e5e7eb"/>
+  <rect x="230" y="170" width="80" height="80" rx="8" fill="#e5e7eb"/>
+  <rect x="320" y="170" width="60" height="80" rx="8" fill="#e5e7eb"/>
+  
+  <rect x="50" y="265" width="330" height="8" rx="4" fill="#d1d5db"/>
+  <rect x="50" y="280" width="200" height="6" rx="3" fill="#9ca3af"/>
+  
+  <rect x="300" y="50" width="80" height="100" rx="8" fill="white" stroke="#e5e7eb" stroke-width="2"/>
+  <rect x="310" y="60" width="60" height="8" rx="4" fill="#374151"/>
+  <rect x="310" y="75" width="40" height="6" rx="3" fill="#6b7280"/>
+  <rect x="310" y="90" width="50" height="6" rx="3" fill="#6b7280"/>
+  <rect x="310" y="105" width="35" height="6" rx="3" fill="#6b7280"/>
+  <rect x="310" y="120" width="45" height="6" rx="3" fill="#6b7280"/>
+  <rect x="310" y="135" width="30" height="6" rx="3" fill="#6b7280"/>
+  
+  <text x="200" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#64748b">Portfolio Template</text>
+</svg>

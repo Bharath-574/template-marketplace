@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <rect width="400" height="300" fill="#f8fafc"/>
+  <rect width="400" height="50" fill="#1f2937"/>
+  <rect x="20" y="15" width="80" height="20" rx="4" fill="#f59e0b"/>
+  <rect x="320" y="10" width="30" height="30" rx="4" fill="#374151"/>
+  <text x="335" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="white">🛒</text>
+  
+  <rect x="20" y="70" width="120" height="100" rx="8" fill="white" stroke="#e5e7eb"/>
+  <rect x="25" y="75" width="110" height="60" rx="4" fill="#f3f4f6"/>
+  <rect x="25" y="145" width="60" height="8" rx="4" fill="#d1d5db"/>
+  <rect x="25" y="158" width="40" height="6" rx="3" fill="#9ca3af"/>
+  
+  <rect x="150" y="70" width="120" height="100" rx="8" fill="white" stroke="#e5e7eb"/>
+  <rect x="155" y="75" width="110" height="60" rx="4" fill="#f3f4f6"/>
+  <rect x="155" y="145" width="60" height="8" rx="4" fill="#d1d5db"/>
+  <rect x="155" y="158" width="40" height="6" rx="3" fill="#9ca3af"/>
+  
+  <rect x="280" y="70" width="120" height="100" rx="8" fill="white" stroke="#e5e7eb"/>
+  <rect x="285" y="75" width="110" height="60" rx="4" fill="#f3f4f6"/>
+  <rect x="285" y="145" width="60" height="8" rx="4" fill="#d1d5db"/>
+  <rect x="285" y="158" width="40" height="6" rx="3" fill="#9ca3af"/>
+  
+  <rect x="20" y="190" width="120" height="100" rx="8" fill="white" stroke="#e5e7eb"/>
+  <rect x="25" y="195" width="110" height="60" rx="4" fill="#f3f4f6"/>
+  <rect x="25" y="265" width="60" height="8" rx="4" fill="#d1d5db"/>
+  <rect x="25" y="278" width="40" height="6" rx="3" fill="#9ca3af"/>
+  
+  <text x="200" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#64748b">E-commerce Template</text>
+</svg>
