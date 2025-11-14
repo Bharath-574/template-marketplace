@@ -610,7 +610,7 @@ class DownloadManager {
 
 <script>
 // Add any JavaScript functionality here
-console.log('${template.name} template loaded');
+// Template loaded successfully
 </script>`;
     }
 

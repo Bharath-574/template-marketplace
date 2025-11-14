@@ -31,7 +31,9 @@
                 lucide.createIcons();
             }
             
-            console.log('✅ Template Marketplace initialized successfully');
+            this.setupGlobalErrorHandling();
+            
+            // Initialize performance monitoring
             isInitialized = true;
             
             // Show welcome notification
